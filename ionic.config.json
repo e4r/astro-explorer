@@ -1,0 +1,7 @@
+{
+  "name": "AstroStats",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
