@@ -57,8 +57,10 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
-              "optimization": false,
+              "baseHref": "/astro-explorer/",
+              "buildOptimizer": true,
+              "aot": true,
+              "optimization": true,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
@@ -131,9 +133,7 @@
     }
   },
   "cli": {
-    "schematicCollections": [
-      "@ionic/angular-toolkit"
-    ],
+    "schematicCollections": ["@ionic/angular-toolkit"],
     "analytics": "a3d2af07-3439-4283-9646-4640528f4a04"
   },
   "schematics": {
