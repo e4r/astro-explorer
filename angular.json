@@ -36,6 +36,14 @@
           },
           "configurations": {
             "production": {
+              "buildOptimizer": true,
+              "aot": true,
+              "optimization": true,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "baseHref": "/astro-explorer/",
               "budgets": [
                 {
                   "type": "initial",
