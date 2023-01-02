@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start" text="Torna"></ion-back-button>
+    <ion-title> All jobs </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ng-container *ngIf="jobs$ | async as jobs">
+      <ion-item [routerLink]="'/jobs/' + job.id" *ngFor="let job of jobs">
+        <ion-label class="ion-text-wrap">
+          <h3>
+            {{ job.name }}
+          </h3>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-content>

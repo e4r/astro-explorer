@@ -1,0 +1,7 @@
+p.nifty {
+  &::first-letter {
+    font-size: 120%;
+    color: var(--ion-color-tertiary);
+    text-transform: capitalize;
+  }
+}

@@ -1,0 +1,10 @@
+<ion-item>
+  <ion-label position="floating"> Specialization </ion-label>
+
+  <ion-select [(ngModel)]="value">
+    <ion-select-option [value]="null">All</ion-select-option>
+    <ion-select-option [value]="option.id" *ngFor="let option of options$ | async">
+      {{ option.name }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>

@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title> All signs </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ng-container *ngIf="signs$ | async as signs">
+      <ion-item [routerLink]="'/sign/' + sign.id" *ngFor="let sign of signs">
+        <ion-avatar slot="start">
+          <ion-img [src]="'/assets/icon/' + sign.name + '-1.svg'"></ion-img>
+        </ion-avatar>
+        <ion-label class="ion-text-wrap">
+          <h3>
+            {{ sign.name }}
+          </h3>
+          <p>Ruler: <planet [id]="sign.ruler"></planet></p>
+          <p>Detriment: <planet [id]="sign.detriment"></planet></p>
+          <p>Exaltation: <planet [id]="sign.exaltation"></planet></p>
+          <p>Fall: <planet [id]="sign.fall"></planet></p>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-content>

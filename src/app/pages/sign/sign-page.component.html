@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start" text="Torna"></ion-back-button>
+    <ion-title>
+      <ng-container *ngIf="signId | signById | async as sign">
+        {{ sign.name }}
+      </ng-container>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ng-container *ngIf="signs$ | async as signs">
+    <ion-item *ngFor="let person of relatedPeople">
+      <ng-container *ngIf="person | deduceSign : signs as sign">
+        <ion-avatar slot="start">
+          <ion-img [src]="'/assets/icon/' + sign.name + '-1.svg'"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h3>
+            {{ person.name }}
+          </h3>
+          <p>
+            {{ sign.name }}
+          </p>
+          <p [routerLink]="'/jobs/' + person.job">
+            <strong>
+              <ng-container *ngIf="person | deduceJob | async as job">
+                {{ job.name }}
+              </ng-container>
+            </strong>
+          </p>
+          <p>Born {{ person.birth | date : 'dd/MMM/YYYY' }} in {{ person.city }}</p>
+        </ion-label>
+      </ng-container>
+    </ion-item>
+  </ng-container>
+</ion-content>

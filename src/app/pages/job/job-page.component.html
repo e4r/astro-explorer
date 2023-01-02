@@ -1,0 +1,127 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start" text="Torna"></ion-back-button>
+    <ion-title> {{ (job$ | async)?.name }} </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title> Filter by </ion-card-title>
+    </ion-card-header>
+    <ion-card-content [formGroup]="filter">
+      <ion-item>
+        <ion-label position="floating"> Sex </ion-label>
+        <ion-select formControlName="sex">
+          <ion-select-option [value]="null"> Both </ion-select-option>
+          <ion-select-option value="male"> Male </ion-select-option>
+          <ion-select-option value="female"> Female </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating"> Element </ion-label>
+
+        <ion-select formControlName="element">
+          <ion-select-option [value]="null"> All </ion-select-option>
+          <ion-select-option value="earth"> Earth </ion-select-option>
+          <ion-select-option value="fire"> Fire </ion-select-option>
+          <ion-select-option value="air"> Air </ion-select-option>
+          <ion-select-option value="water"> Water </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating"> Quality </ion-label>
+
+        <ion-select formControlName="quality">
+          <ion-select-option [value]="null"> All </ion-select-option>
+          <ion-select-option value="fixed"> Fixed </ion-select-option>
+          <ion-select-option value="mutable"> Mutable </ion-select-option>
+          <ion-select-option value="cardinal"> Cardinal </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <specialization-select formControlName="specialization" [jobId]="jobId"></specialization-select>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light">
+            <ion-label>Ranking</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <ion-item *ngFor="let sign of SIGNS_COUNT; let i = index">
+              <ion-avatar slot="start">
+                <ion-img [src]="'/assets/icon/' + sign.sign + '-1.svg'"></ion-img>
+              </ion-avatar>
+              <ion-label class="ion-text-wrap">
+                <h2 *ngIf="i === 0">Most recurring!</h2>
+                <h3>
+                  {{ sign.sign }}
+                </h3>
+                <p>{{ sign.count }} {{ (job$ | async)?.name }} under the sign of {{ sign.sign }}</p>
+              </ion-label>
+            </ion-item>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-card-content>
+  </ion-card>
+
+  <highcharts-chart
+    [Highcharts]="Highcharts"
+    [constructorType]="chartConstructor"
+    [options]="chartBySign"
+    [callbackFunction]="chartCallback"
+    [(update)]="updateFlag"
+    [oneToOne]="oneToOneFlag"
+    [runOutsideAngular]="runOutsideAngular"
+    style="width: 100vw; display: block"
+  ></highcharts-chart>
+
+  <highcharts-chart
+    [Highcharts]="Highcharts"
+    [constructorType]="chartConstructor"
+    [options]="chartByElement"
+    [callbackFunction]="chartCallback"
+    [(update)]="updateFlag"
+    [oneToOne]="oneToOneFlag"
+    [runOutsideAngular]="runOutsideAngular"
+    style="width: 100vw; display: block"
+  ></highcharts-chart>
+
+  <highcharts-chart
+    [Highcharts]="Highcharts"
+    [constructorType]="chartConstructor"
+    [options]="chartByCardinality"
+    [callbackFunction]="chartCallback"
+    [(update)]="updateFlag"
+    [oneToOne]="oneToOneFlag"
+    [runOutsideAngular]="runOutsideAngular"
+    style="width: 100vw; display: block"
+  ></highcharts-chart>
+
+  <ng-container *ngIf="signs$ | async as signs">
+    <ion-item *ngFor="let person of relatedPeople | slice : 0 : 20">
+      <ng-container *ngIf="person | deduceSign : signs as sign">
+        <ion-avatar slot="start">
+          <ion-img [src]="'/assets/icon/' + sign.name + '-1.svg'"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h3>
+            {{ person.name }}
+          </h3>
+          <nifty-sign [sign]="sign"></nifty-sign>
+          <p *ngIf="person.specialization">
+            <ng-container *ngIf="person.specialization | deduceSpecialization | async as spec">
+              {{ spec.name }}
+            </ng-container>
+          </p>
+        </ion-label>
+      </ng-container>
+    </ion-item>
+  </ng-container>
+</ion-content>
