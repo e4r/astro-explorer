@@ -41,7 +41,7 @@
               "optimization": true,
               "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
+              "sourceMap": false,
               "namedChunks": true,
               "baseHref": "/astro-explorer/",
               "budgets": [
@@ -65,10 +65,8 @@
               "outputHashing": "all"
             },
             "development": {
-              "baseHref": "/astro-explorer/",
-              "buildOptimizer": true,
-              "aot": true,
-              "optimization": true,
+              "buildOptimizer": false,
+              "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
